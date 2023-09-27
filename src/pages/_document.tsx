@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.webpack" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -60,6 +60,19 @@ export default function Document() {
         />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+          }).catch(function(error) {
+            console.error('Service Worker registration failed:', error);
+          });
+        }
+      `,
+          }}
+        />
       </Head>
       <body>
         <Main />
